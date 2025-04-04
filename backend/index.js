@@ -3,17 +3,15 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();
 import doctorRoutes from "./routes/doctorRoute.js";
+import patientRoutes from "./routes/patientRouter.js";
 
 const app = express();
 const port = process.env.PORT || 8000;
 const mongoUrl = process.env.MONGO_URL;
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
-
-app.use("/doctors", doctorRoutes);
+app.use("/api/doctors", doctorRoutes);
+app.use("/api/patients", patientRoutes);
 mongoose
   .connect(mongoUrl)
   .then(() => {

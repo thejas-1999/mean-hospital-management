@@ -61,13 +61,19 @@ const updateDoctor = async (req, res) => {
 };
 
 const deleteDoctor = async (req, res) => {
-  const doctor = await Doctor.findById(req.params.id);
-  if (doctor) {
+  try {
+    const doctor = await Doctor.findById(req.params.id);
+
+    if (!doctor) {
+      return res.status(404).json({ error: "Doctor not found" });
+    }
+
     await Doctor.deleteOne({ _id: doctor._id });
-    res.status(200).json({ message: `Deleted succeessfully` });
-  } else {
-    res.status(404);
-    throw new Error("Doctor not found");
+
+    res.status(200).json({ message: "Deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting doctor:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
