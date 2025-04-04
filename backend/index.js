@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 dotenv.config();
 import doctorRoutes from "./routes/doctorRoute.js";
 import patientRoutes from "./routes/patientRouter.js";
+import appointmentRoutes from "./routes/appoinmentRouter.js";
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use("/api/doctors", doctorRoutes);
 app.use("/api/patients", patientRoutes);
+app.use("/api/appointments", appointmentRoutes);
 mongoose
   .connect(mongoUrl)
   .then(() => {
