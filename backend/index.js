@@ -2,15 +2,18 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();
+import doctorRoutes from "./routes/doctorRoute.js";
 
 const app = express();
 const port = process.env.PORT || 8000;
 const mongoUrl = process.env.MONGO_URL;
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
+app.use("/doctors", doctorRoutes);
 mongoose
   .connect(mongoUrl)
   .then(() => {
