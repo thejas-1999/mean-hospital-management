@@ -1,2 +1,18 @@
-<h1>Hello world</h1>
-<router-outlet />
+<div class="main">
+  <div class="heading">
+    <h1 class="hospital">CFG's Hospital Management Website</h1>
+  </div>
+  <div class="nav-bar">
+    <div class="nav-continer">
+      <button class="nav-btn" routerLink="/appointments">Appointments</button>
+    </div>
+    <div class="nav-continer">
+      <button class="nav-btn" routerLink="/patients">Patients</button>
+    </div>
+    <div class="nav-continer">
+      <button class="nav-btn" routerLink="/doctors">Doctors</button>
+    </div>
+  </div>
+
+  <router-outlet />
+</div>
