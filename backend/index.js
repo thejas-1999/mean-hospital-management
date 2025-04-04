@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 dotenv.config();
 import doctorRoutes from "./routes/doctorRoute.js";
@@ -10,6 +11,9 @@ const app = express();
 const port = process.env.PORT || 8000;
 const mongoUrl = process.env.MONGO_URL;
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
 
 app.use("/api/doctors", doctorRoutes);
 app.use("/api/patients", patientRoutes);
