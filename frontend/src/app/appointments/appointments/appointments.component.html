@@ -79,14 +79,16 @@
       <!-- Appointment Card (repeated for each appointment) -->
       <div class="doctor-card" *ngFor="let appointment of appointments">
         <div>
-          <span>Patient:</span> {{ appointment.patient.name }}, ({{
-            appointment.patient.age
-          }}) - {{ appointment.patient.gender }}
+          <span>Patient:</span>
+          {{ appointment.patient?.name }}, ({{ appointment.patient?.age }}) -
+          {{ appointment.patient?.gender }}
         </div>
         <div>
-          <span>Doctor:</span> {{ appointment.doctor.name }} -
-          {{ appointment.doctor.specialization }}
+          <span>Doctor:</span>
+          {{ appointment.doctor?.name }} -
+          {{ appointment.doctor?.specialization }}
         </div>
+
         <div>
           <span>Date:</span> {{ appointment.date | date : "mediumDate" }}
         </div>
