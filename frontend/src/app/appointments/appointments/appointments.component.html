@@ -1,1 +1,117 @@
-<p>appointments works!</p>
+<div class="main-container">
+  <!-- Appointment Form Section -->
+  <div class="appointment-form">
+    <h1 class="heading">
+      <span *ngIf="!editMode">Add Appointment</span>
+      <span *ngIf="editMode">Edit Appointment</span>
+    </h1>
+
+    <form [formGroup]="appointmentForm" (ngSubmit)="formSubmit()">
+      <!-- Patient -->
+      <label for="patient">Patient:</label><span class="required">*</span>
+      <select id="patient" formControlName="patient">
+        <option value="">Select</option>
+        <option *ngFor="let patient of patients" [value]="patient._id">
+          {{ patient.name }}, ({{ patient.age }}) - {{ patient.gender }}
+        </option>
+      </select>
+
+      <span
+        *ngIf="
+          appointmentForm.controls.patient.invalid &&
+          appointmentForm.controls.patient.touched
+        "
+        class="error-message"
+      >
+        Patient is required
+      </span>
+
+      <!-- Doctor -->
+      <label for="doctor">Doctor:</label><span class="required">*</span>
+      <select id="doctor" formControlName="doctor">
+        <option value="">Select</option>
+        <option *ngFor="let doctor of doctors" [value]="doctor._id">
+          {{ doctor.name }} - {{ doctor.specialization }}
+        </option>
+      </select>
+
+      <span
+        *ngIf="
+          appointmentForm.controls.doctor.invalid &&
+          appointmentForm.controls.doctor.touched
+        "
+        class="error-message"
+      >
+        Doctor is required
+      </span>
+
+      <!-- Date -->
+      <label for="date">Date:</label><span class="required">*</span>
+      <input
+        id="date"
+        type="date"
+        formControlName="date"
+        [min]="today"
+        required
+      />
+      <span
+        *ngIf="
+          appointmentForm.controls.date.invalid &&
+          appointmentForm.controls.date.touched
+        "
+        class="error-message"
+      >
+        Date is required
+      </span>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="appointmentForm.invalid">
+        <span *ngIf="!editMode">Add Appointment</span>
+        <span *ngIf="editMode">Update Appointment</span>
+      </button>
+    </form>
+  </div>
+  <!-- Appointment List Section -->
+  <div class="appointment-card">
+    <h1 class="heading">Appointment List ({{ appointments.length }})</h1>
+
+    <div class="doctor-container">
+      <!-- Appointment Card (repeated for each appointment) -->
+      <div class="doctor-card" *ngFor="let appointment of appointments">
+        <div>
+          <span>Patient:</span> {{ appointment.patient.name }}, ({{
+            appointment.patient.age
+          }}) - {{ appointment.patient.gender }}
+        </div>
+        <div>
+          <span>Doctor:</span> {{ appointment.doctor.name }} -
+          {{ appointment.doctor.specialization }}
+        </div>
+        <div>
+          <span>Date:</span> {{ appointment.date | date : "mediumDate" }}
+        </div>
+
+        <div class="button-group">
+          <button class="edit-btn" (click)="editAppointment(appointment)">
+            Edit
+          </button>
+          <button
+            class="delete-btn"
+            (click)="deleteAppointment(appointment._id)"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty state message when no appointments -->
+      <div
+        class="empty-state"
+        *ngIf="!appointments || appointments.length === 0"
+      >
+        <p>No appointments added yet</p>
+        <p>Use the form to add your first appointment</p>
+      </div>
+    </div>
+  </div>
+</div>
