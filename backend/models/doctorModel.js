@@ -9,6 +9,13 @@ const doctorSchema = new mongoose.Schema(
     specialization: {
       type: String,
       required: true,
+      enum: [
+        "Cardiologist",
+        "Dermatologist",
+        "Neurologist",
+        "Pediatrician",
+        "Ophthalmologist",
+      ],
     },
   },
   { timestamps: true }

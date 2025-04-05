@@ -1,1 +1,55 @@
-<p>doctors works!</p>
+<form [formGroup]="doctorForm">
+  <h1 class="heading">Add Doctor</h1>
+
+  <!-- Name -->
+  <label for="name">Name</label><span class="required">*</span>
+  <input id="name" type="text" formControlName="name" />
+  <span
+    *ngIf="doctorForm.controls.name.invalid && doctorForm.controls.name.touched"
+    class="error-message"
+  >
+    <span *ngIf="doctorForm.controls.name.errors?.['required']">
+      Doctor name is required
+    </span>
+    <span *ngIf="doctorForm.controls.name.errors?.['minlength']">
+      Doctor name must be at least 4 characters
+    </span>
+  </span>
+
+  <!-- Specialization -->
+  <label for="specialization">Choose Specialization:</label>
+  <select id="specialization" formControlName="specialization">
+    <option value="">Select Specialization</option>
+    <option value="cardiologist">Cardiologist</option>
+    <option value="dermatologist">Dermatologist</option>
+    <option value="neurologist">Neurologist</option>
+    <option value="orthopedic">Orthopedic Surgeon</option>
+    <option value="pediatrician">Pediatrician</option>
+    <option value="ophthalmologist">Ophthalmologist</option>
+  </select>
+  <span
+    *ngIf="
+      doctorForm.controls.specialization.invalid &&
+      doctorForm.controls.specialization.touched
+    "
+    class="error-message"
+  >
+    <span *ngIf="doctorForm.controls.specialization.errors?.['required']">
+      Specialization is required
+    </span>
+  </span>
+
+  <button [disabled]="doctorForm.invalid" (click)="formSubmit()">Submit</button>
+</form>
+
+<h1 class="heading">Doctors List</h1>
+
+<div class="doctor-container">
+  <div class="doctor-card" *ngFor="let doctor of doctors">
+    <h2>{{ doctor.name }}</h2>
+    <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+
+    <button>Edit</button>
+    <button>Delete</button>
+  </div>
+</div>

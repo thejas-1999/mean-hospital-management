@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 dotenv.config();
+import cors from "cors";
 import doctorRoutes from "./routes/doctorRoute.js";
 import patientRoutes from "./routes/patientRouter.js";
 import appointmentRoutes from "./routes/appoinmentRouter.js";
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
+app.use(cors());
 
 app.use("/api/doctors", doctorRoutes);
 app.use("/api/patients", patientRoutes);
