@@ -15,6 +15,8 @@ const doctorSchema = new mongoose.Schema(
         "Neurologist",
         "Pediatrician",
         "Ophthalmologist",
+        "Gynecologist",
+        "Orthopedic",
       ],
     },
   },

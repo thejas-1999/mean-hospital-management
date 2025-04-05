@@ -1,1 +1,109 @@
-<p>patients works!</p>
+<div class="main-container">
+  <!-- Patient Form Section -->
+  <div class="patient-form">
+    <h1 class="heading">
+      <span *ngIf="!editMode">Add Patient</span>
+      <span *ngIf="editMode">Edit Patient</span>
+    </h1>
+
+    <form [formGroup]="patientForm">
+      <!-- Name -->
+      <label for="name">Name</label><span class="required">*</span>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        placeholder="Enter Patient's full name"
+      />
+      <span
+        *ngIf="
+          patientForm.controls.name.invalid && patientForm.controls.name.touched
+        "
+        class="error-message"
+      >
+        <span *ngIf="patientForm.controls.name.errors?.['required']">
+          Patient name is required
+        </span>
+        <span *ngIf="patientForm.controls.name.errors?.['minlength']">
+          Patient name must be at least 4 characters
+        </span>
+      </span>
+
+      <!-- Age -->
+      <label for="age">Age</label><span class="required">*</span>
+      <input
+        id="age"
+        type="number"
+        formControlName="age"
+        placeholder="Enter Patient's age"
+      />
+      <span
+        *ngIf="
+          patientForm.controls.age.invalid && patientForm.controls.age.touched
+        "
+        class="error-message"
+      >
+        <span *ngIf="patientForm.controls.age.errors?.['required']">
+          Age is required
+        </span>
+        <span *ngIf="patientForm.controls.age.errors?.['min']">
+          Age must be a positive number
+        </span>
+      </span>
+
+      <!-- Gender -->
+      <label for="gender">Choose Gender:</label><span class="required">*</span>
+      <select id="gender" formControlName="gender">
+        <option value="">Select</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+      <span
+        *ngIf="
+          patientForm.controls.gender.invalid &&
+          patientForm.controls.gender.touched
+        "
+        class="error-message"
+      >
+        <span *ngIf="patientForm.controls.gender.errors?.['required']">
+          Gender is required
+        </span>
+      </span>
+
+      <!-- Buttons -->
+      <button
+        type="button"
+        [disabled]="patientForm.invalid"
+        (click)="formSubmit()"
+      >
+        <span *ngIf="!editMode">Add Patient</span>
+        <span *ngIf="editMode">Update Patient</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Patients List Section -->
+  <div class="patient-card">
+    <h1 class="heading">Patients List ({{ patients.length }})</h1>
+
+    <div class="patient-container">
+      <div class="patient-card" *ngFor="let patient of patients">
+        <h2>{{ patient.name }}</h2>
+        <div>Age: {{ patient.age }}</div>
+        <div>Gender: {{ patient.gender }}</div>
+
+        <div class="button-group">
+          <button class="edit-btn" (click)="editPatient(patient)">Edit</button>
+          <button class="delete-btn" (click)="deletePatient(patient._id)">
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="!patients || patients.length === 0">
+        <p>No Patients added yet</p>
+        <p>Use the form to add your first patient</p>
+      </div>
+    </div>
+  </div>
+</div>

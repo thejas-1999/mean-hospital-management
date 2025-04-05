@@ -7,9 +7,9 @@ import { Injectable } from '@angular/core';
 export class DoctorsService {
 
   getDoctorsApi = 'http://localhost:5000/api/doctors/getDoctors'
-  adddDoctorsApi = 'http://localhost:5000/api/doctors/addDoctor'
-  updateDoctorsApi = 'http://localhost:5000/api/doctors/updateDoctor'
-  deleteDoctorsApi = 'http://localhost:5000/api/doctors/deleteDoctor'
+  adddDoctorApi = 'http://localhost:5000/api/doctors/addDoctor'
+  updateDoctorApi = 'http://localhost:5000/api/doctors/updateDoctor'
+  deleteDoctorApi = 'http://localhost:5000/api/doctors/deleteDoctor'
 
   constructor(private http: HttpClient) {
     this.fetchDoctors()
@@ -18,4 +18,18 @@ export class DoctorsService {
   fetchDoctors() {
     return this.http.get<any[]>(this.getDoctorsApi)
   }
+
+  addDoctors(doctor: any) {
+    return this.http.post(this.adddDoctorApi, doctor)
+
+  }
+
+  editDoctor(id: string, updatedData: any) {
+    return this.http.put(`${this.updateDoctorApi}/${id}`, updatedData);
+  }
+
+  deleteDoctor(doctorId: string) {
+    return this.http.delete(`${this.deleteDoctorApi}/${doctorId}`)
+  }
+
 }
